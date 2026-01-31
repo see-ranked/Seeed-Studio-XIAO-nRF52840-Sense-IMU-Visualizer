@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XIAO nRF52840 IMU Visualizer</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 XIAO nRF52840 Sense IMU Visualizer</h1>
+            <p class="subtitle">リアルタイム6軸センサーデータ表示</p>
+        </header>
+
+        <div class="control-panel">
+            <button id="connectBtn" class="btn-primary">
+                <span class="btn-icon">🔌</span>
+                シリアルポートに接続
+            </button>
+            <button id="resetBtn" class="btn-secondary">
+                <span class="btn-icon">🔄</span>
+                姿勢リセット
+            </button>
+            <div id="status" class="status disconnected">
+                <span class="status-dot"></span>
+                <span class="status-text">未接続</span>
+            </div>
+        </div>
+
+        <!-- Settings Panel -->
+        <div class="settings-panel">
+            <h3>⚙️ ドリフト補正設定</h3>
+            <div class="settings-grid">
+                <div class="setting-item">
+                    <label class="toggle-label">
+                        <input type="checkbox" id="driftCompensation" checked>
+                        <span class="toggle-slider"></span>
+                        <span class="toggle-text">移動平均フィルタ</span>
+                    </label>
+                </div>
+
+                <div class="setting-item">
+                    <label>デッドゾーン閾値: <span id="thresholdValue">0.50</span> °/s</label>
+                    <input type="range" id="gyroThreshold" min="0" max="2" step="0.05" value="0.5" class="slider">
+                </div>
+
+                <div class="setting-item">
+                    <label>移動平均ウィンドウ: <span id="windowValue">20</span> サンプル</label>
+                    <input type="range" id="maWindowSize" min="5" max="50" step="1" value="20" class="slider">
+                </div>
+
+                <div class="setting-item">
+                    <label>変化検出閾値: <span id="changeValue">0.30</span> °/s</label>
+                    <input type="range" id="changeThreshold" min="0.1" max="2" step="0.05" value="0.3" class="slider">
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <!-- 3D Visualization -->
+            <div class="panel visualization-panel">
+                <h2>3Dビジュアライゼーション</h2>
+                <div id="threejs-container"></div>
+                <div class="orientation-info">
+                    <div class="orientation-item">
+                        <span class="label">Roll:</span>
+                        <span id="roll" class="value">0.0°</span>
+                    </div>
+                    <div class="orientation-item">
+                        <span class="label">Pitch:</span>
+                        <span id="pitch" class="value">0.0°</span>
+                    </div>
+                    <div class="orientation-item">
+                        <span class="label">Yaw:</span>
+                        <span id="yaw" class="value">0.0°</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sensor Data -->
+            <div class="panel data-panel">
+                <h2>センサーデータ</h2>
+
+                <div class="sensor-group">
+                    <h3>📊 加速度計 (m/s²)</h3>
+                    <div class="sensor-values">
+                        <div class="sensor-value">
+                            <span class="axis x-axis">X</span>
+                            <span id="accelX" class="value">0.000</span>
+                        </div>
+                        <div class="sensor-value">
+                            <span class="axis y-axis">Y</span>
+                            <span id="accelY" class="value">0.000</span>
+                        </div>
+                        <div class="sensor-value">
+                            <span class="axis z-axis">Z</span>
+                            <span id="accelZ" class="value">0.000</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sensor-group">
+                    <h3>🔄 ジャイロスコープ (°/s)</h3>
+                    <div class="sensor-values">
+                        <div class="sensor-value">
+                            <span class="axis x-axis">X</span>
+                            <span id="gyroX" class="value">0.000</span>
+                        </div>
+                        <div class="sensor-value">
+                            <span class="axis y-axis">Y</span>
+                            <span id="gyroY" class="value">0.000</span>
+                        </div>
+                        <div class="sensor-value">
+                            <span class="axis z-axis">Z</span>
+                            <span id="gyroZ" class="value">0.000</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sensor-group">
+                    <h3>🌡️ 温度</h3>
+                    <div class="sensor-values">
+                        <div class="sensor-value temperature">
+                            <span id="temperature" class="value large">--</span>
+                            <span class="unit">℃</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stats">
+                    <div class="stat-item">
+                        <span class="stat-label">サンプルレート:</span>
+                        <span id="sampleRate" class="stat-value">-- Hz</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">受信パケット:</span>
+                        <span id="packetCount" class="stat-value">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="charts-container">
+            <div class="panel chart-panel">
+                <h2>加速度グラフ</h2>
+                <canvas id="accelChart"></canvas>
+            </div>
+            <div class="panel chart-panel">
+                <h2>ジャイロスコープグラフ</h2>
+                <canvas id="gyroChart"></canvas>
+            </div>
+        </div>
+
+        <footer>
+            <p>💡 Tip: Chrome/Edgeブラウザで Web Serial API をサポートしています</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
