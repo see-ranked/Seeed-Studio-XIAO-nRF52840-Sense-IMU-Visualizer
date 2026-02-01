@@ -18,9 +18,20 @@
         </header>
 
         <div class="control-panel">
+            <div class="connection-mode">
+                <label class="mode-label">
+                    <input type="radio" name="connectionMode" value="serial" checked>
+                    <span class="mode-text">📡 Serial (USB)</span>
+                </label>
+                <label class="mode-label">
+                    <input type="radio" name="connectionMode" value="bluetooth">
+                    <span class="mode-text">📶 Bluetooth</span>
+                </label>
+            </div>
+
             <button id="connectBtn" class="btn-primary">
                 <span class="btn-icon">🔌</span>
-                シリアルポートに接続
+                <span id="connectBtnText">シリアルポートに接続</span>
             </button>
             <button id="resetBtn" class="btn-secondary">
                 <span class="btn-icon">🔄</span>
@@ -87,7 +98,7 @@
                 <h2>センサーデータ</h2>
 
                 <div class="sensor-group">
-                    <h3>📊 加速度計 (m/s²)</h3>
+                    <h3>📊 加速度計 (G)</h3>
                     <div class="sensor-values">
                         <div class="sensor-value">
                             <span class="axis x-axis">X</span>

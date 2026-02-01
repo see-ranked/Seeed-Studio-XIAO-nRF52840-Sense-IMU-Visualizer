@@ -5,6 +5,11 @@
 let port;
 let reader;
 let isConnected = false;
+let connectionMode = 'serial'; // 'serial' or 'bluetooth'
+
+// Bluetooth変数
+let bleDevice;
+let bleCharacteristic;
 let scene, camera, renderer, cube;
 let accelChart, gyroChart;
 let packetCount = 0;
@@ -59,6 +64,15 @@ function checkWebSerialSupport() {
 function setupEventListeners() {
     document.getElementById('connectBtn').addEventListener('click', toggleConnection);
 
+    // 接続モード選択
+    const modeRadios = document.querySelectorAll('input[name="connectionMode"]');
+    modeRadios.forEach(radio => {
+        radio.addEventListener('change', (e) => {
+            connectionMode = e.target.value;
+            updateConnectionButtonText();
+        });
+    });
+
     // リセットボタンのイベントリスナー
     const resetBtn = document.getElementById('resetBtn');
     if (resetBtn) {
@@ -105,27 +119,45 @@ function setupEventListeners() {
     }
 }
 
+// 接続ボタンのテキスト更新
+function updateConnectionButtonText() {
+    const btnText = document.getElementById('connectBtnText');
+    if (isConnected) {
+        btnText.textContent = '切断';
+    } else {
+        if (connectionMode === 'serial') {
+            btnText.textContent = 'シリアルポートに接続';
+        } else {
+            btnText.textContent = 'Bluetoothに接続';
+        }
+    }
+}
+
 // 接続/切断トグル
 async function toggleConnection() {
     if (isConnected) {
         await disconnect();
     } else {
-        await connect();
+        if (connectionMode === 'serial') {
+            await connectSerial();
+        } else {
+            await connectBluetooth();
+        }
     }
 }
 
-// シリアルポート接続
-async function connect() {
+// シリアル接続
+async function connectSerial() {
     try {
-        // ポート選択ダイアログを表示
+        // シリアルポートを選択
         port = await navigator.serial.requestPort();
 
         // ポートを開く（ボーレート: 115200）
         await port.open({ baudRate: 115200 });
 
         isConnected = true;
-        updateStatus('connected', '接続済み');
-        document.getElementById('connectBtn').innerHTML = '<span class="btn-icon">🔌</span> 切断';
+        updateStatus('connected', 'シリアル接続中');
+        updateConnectionButtonText();
 
         // データ読み取り開始
         readSerialData();
@@ -133,29 +165,225 @@ async function connect() {
     } catch (error) {
         console.error('接続エラー:', error);
         updateStatus('error', '接続失敗');
-        alert('シリアルポートへの接続に失敗しました: ' + error.message);
+        alert('シリアルポートへの接続に失敗しました。\n' + error.message);
     }
 }
 
-// シリアルポート切断
-async function disconnect() {
+// Bluetooth接続
+async function connectBluetooth() {
     try {
-        if (reader) {
-            await reader.cancel();
-            reader = null;
+        // Web Bluetooth APIのサポートチェック
+        if (!navigator.bluetooth) {
+            throw new Error('このブラウザはWeb Bluetooth APIをサポートしていません。');
         }
 
-        if (port) {
-            await port.close();
-            port = null;
+        updateStatus('disconnected', '接続中...');
+
+        // BLEデバイスを検索（Bluefruit UART Service UUID）
+        bleDevice = await navigator.bluetooth.requestDevice({
+            filters: [
+                { namePrefix: 'XIAO' },
+                { services: ['6e400001-b5a3-f393-e0a9-e50e24dcca9e'] }
+            ],
+            optionalServices: ['6e400001-b5a3-f393-e0a9-e50e24dcca9e']
+        });
+
+        console.log('BLEデバイス検出:', bleDevice.name);
+
+        // GATTサーバーに接続
+        const server = await bleDevice.gatt.connect();
+        console.log('GATT接続成功');
+
+        // UART サービスを取得（Bluefruit UART Service）
+        const service = await server.getPrimaryService('6e400001-b5a3-f393-e0a9-e50e24dcca9e');
+        console.log('UARTサービス取得');
+
+        // TXキャラクタリスティックを取得（デバイスからの送信）
+        bleCharacteristic = await service.getCharacteristic('6e400003-b5a3-f393-e0a9-e50e24dcca9e');
+        console.log('TXキャラクタリスティック取得');
+
+        // 通知を有効化
+        await bleCharacteristic.startNotifications();
+        console.log('通知有効化');
+
+        // データ受信ハンドラーを設定
+        bleCharacteristic.addEventListener('characteristicvaluechanged', handleBluetoothData);
+
+        isConnected = true;
+        updateStatus('connected', 'Bluetooth接続中');
+        updateConnectionButtonText();
+
+        // 切断イベントハンドラー
+        bleDevice.addEventListener('gattserverdisconnected', () => {
+            console.log('Bluetooth切断');
+            isConnected = false;
+            updateStatus('disconnected', '未接続');
+            updateConnectionButtonText();
+        });
+
+    } catch (error) {
+        console.error('Bluetooth接続エラー:', error);
+        updateStatus('error', '接続失敗');
+
+        let errorMsg = 'Bluetooth接続に失敗しました。\n\n';
+        if (error.name === 'NotFoundError') {
+            errorMsg += '対応するデバイスが見つかりませんでした。\n\n確認事項:\n';
+            errorMsg += '1. XIAOがBLEアドバタイズ中か確認\n';
+            errorMsg += '2. シリアルモニターで "BLE initialized successfully!" を確認\n';
+            errorMsg += '3. デバイス名が "XIAO_IMU" で始まるか確認\n';
+            errorMsg += '4. 他のデバイスと接続していないか確認';
+        } else {
+            errorMsg += error.message;
+        }
+        alert(errorMsg);
+    }
+}
+
+// 切断
+async function disconnect() {
+    try {
+        if (connectionMode === 'serial') {
+            // シリアル切断
+            if (reader) {
+                await reader.cancel();
+                reader = null;
+            }
+
+            if (port) {
+                await port.close();
+                port = null;
+            }
+        } else {
+            // Bluetooth切断
+            if (bleCharacteristic) {
+                await bleCharacteristic.stopNotifications();
+                bleCharacteristic.removeEventListener('characteristicvaluechanged', handleBluetoothData);
+                bleCharacteristic = null;
+            }
+
+            if (bleDevice && bleDevice.gatt.connected) {
+                await bleDevice.gatt.disconnect();
+            }
+            bleDevice = null;
         }
 
         isConnected = false;
         updateStatus('disconnected', '未接続');
-        document.getElementById('connectBtn').innerHTML = '<span class="btn-icon">🔌</span> シリアルポートに接続';
+        updateConnectionButtonText();
 
     } catch (error) {
         console.error('切断エラー:', error);
+    }
+}
+
+// Bluetoothデータバッファ
+let bleBuffer = '';
+
+// バイナリBLEデータのデコード
+function decodeBinaryBLE(arrayBuffer) {
+    const view = new DataView(arrayBuffer);
+
+    // 13ビット値のデコード (符号拡張付き)
+    function decode13bit(bits) {
+        // 13ビット目が1なら負数として符号拡張
+        if (bits & 0x1000) {
+            // 負数: 16ビットに符号拡張してから変換
+            bits = bits | 0xE000;
+            // JavaScriptの符号付き整数として扱う
+            bits = (bits << 16) >> 16;
+        }
+        return bits / 16.0;
+    }
+
+    // 加速度データを抽出 (バイト0-4)
+    const ax = (view.getUint8(0) | ((view.getUint8(1) & 0x1F) << 8));
+    const ay = ((view.getUint8(1) >> 5) | (view.getUint8(2) << 3) | ((view.getUint8(3) & 0x03) << 11));
+    const az = ((view.getUint8(3) >> 2) | ((view.getUint8(4) & 0x7F) << 6));
+
+    // ジャイロデータを抽出 (バイト5-9)
+    const gx = (view.getUint8(5) | ((view.getUint8(6) & 0x1F) << 8));
+    const gy = ((view.getUint8(6) >> 5) | (view.getUint8(7) << 3) | ((view.getUint8(8) & 0x03) << 11));
+    const gz = ((view.getUint8(8) >> 2) | ((view.getUint8(9) & 0x7F) << 6));
+
+    // 温度データを抽出 (バイト10-11)
+    const tempInt = view.getInt8(10);
+    const tempFrac = view.getUint8(11) / 256.0;
+
+    return {
+        accel: {
+            x: decode13bit(ax),
+            y: decode13bit(ay),
+            z: decode13bit(az)
+        },
+        gyro: {
+            x: decode13bit(gx),
+            y: decode13bit(gy),
+            z: decode13bit(gz)
+        },
+        temp: tempInt + tempFrac
+    };
+}
+
+// Bluetoothデータハンドラー
+function handleBluetoothData(event) {
+    const value = event.target.value;
+    const decoder = new TextDecoder('utf-8');
+    const text = decoder.decode(value);
+
+    // バイナリ形式かチェック (12バイト)
+    if (value.byteLength === 12) {
+        console.log('📦 バイナリデータ受信:', value.byteLength, 'bytes');
+
+        try {
+            const data = decodeBinaryBLE(value.buffer);
+            console.log('✨ デコード成功:', data);
+            processData(data);
+        } catch (error) {
+            console.error('❌ バイナリデコードエラー:', error);
+        }
+        return;
+    }
+
+    // バッファに追加
+    bleBuffer += text;
+
+    // 改行が含まれている場合のみ処理
+    if (bleBuffer.includes('\n')) {
+        console.log('✅ 完全バッファ:', JSON.stringify(bleBuffer));
+        const lines = bleBuffer.split('\n');
+
+        // 最後の要素は未完成の可能性があるので保持
+        bleBuffer = lines.pop() || '';
+
+        // 完全な行を処理
+        lines.forEach(line => {
+            const trimmed = line.trim();
+            if (trimmed.length === 0) return;
+
+            console.log('🔍 解析:', trimmed);
+
+            try {
+                let data;
+                // カンマ区切りの場合（BLE）
+                if (!trimmed.startsWith('{') && !trimmed.startsWith('[')) {
+                    const values = trimmed.split(',').map(v => parseFloat(v));
+                    if (values.length >= 6) {  // 6個以上あればOK
+                        data = values;
+                    }
+                } else {
+                    // JSON形式（配列またはオブジェクト）
+                    data = JSON.parse(trimmed);
+                }
+
+                if (data) {
+                    console.log('✨ 成功!');
+                    processData(data);
+                }
+            } catch (error) {
+                console.error('❌ エラー:', error.message);
+                console.error('   データ:', trimmed);
+            }
+        });
     }
 }
 
@@ -192,33 +420,56 @@ async function readSerialData() {
     }
 }
 
-// シリアルデータ処理
+// データ処理（シリアル・Bluetooth共通）
+function processData(data) {
+    packetCount++;
+
+    // BLE配列形式を標準オブジェクトに変換 [ax,ay,az,gx,gy,gz,t]
+    if (Array.isArray(data) && data.length >= 6) {
+        // 整数からデスケーリング: accel/100, gyro/10, temp/1
+        data = {
+            accel: { x: data[0] / 100, y: data[1] / 100, z: data[2] / 100 },
+            gyro: { x: data[3] / 10, y: data[4] / 10, z: data[5] / 10 },
+            temp: data[6] || 0  // 7番目がない場合は0
+        };
+    }
+    // BLE短縮キーを標準キーに変換
+    else if (data.a && !data.accel) {
+        data.accel = data.a;
+        data.gyro = data.g;
+        data.temp = data.t;
+    }
+
+    // タイムスタンプ処理（BLE経由の場合はtimestampがない）
+    const currentTime = data.timestamp || Date.now();
+
+    if (lastTimestamp > 0) {
+        const deltaTime = currentTime - lastTimestamp;
+        if (deltaTime > 0) {
+            sampleRate = (1000 / deltaTime).toFixed(1);
+        }
+    }
+    lastTimestamp = currentTime;
+
+    // センサーデータ更新
+    if (data.accel && data.gyro) {
+        updateSensorData(data);
+        updateOrientation(data);
+        update3DVisualization();
+        updateCharts();
+
+        document.getElementById('packetCount').textContent = packetCount;
+        document.getElementById('sampleRate').textContent = sampleRate + ' Hz';
+    }
+}
+
+// シリアルデータ処理 (この関数はprocessDataに統合されるため、中身を変更)
 function processSerialLine(line) {
     // JSON形式のデータを解析
     if (line.startsWith('{')) {
         try {
             const data = JSON.parse(line);
-
-            if (data.accel && data.gyro) {
-                updateSensorData(data);
-                updateOrientation(data);
-                update3DVisualization();
-                updateCharts();
-
-                packetCount++;
-                document.getElementById('packetCount').textContent = packetCount;
-
-                // サンプルレート計算
-                if (data.timestamp && lastTimestamp > 0) {
-                    const deltaTime = (data.timestamp - lastTimestamp) / 1000; // 秒
-                    if (deltaTime > 0) {
-                        sampleRate = Math.round(1 / deltaTime);
-                        document.getElementById('sampleRate').textContent = sampleRate + ' Hz';
-                    }
-                }
-                lastTimestamp = data.timestamp;
-            }
-
+            processData(data); // processDataを呼び出すように変更
         } catch (error) {
             console.error('JSON解析エラー:', error, line);
         }

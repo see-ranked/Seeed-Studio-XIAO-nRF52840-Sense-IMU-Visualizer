@@ -68,12 +68,56 @@ h1 {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 1rem;
     margin-bottom: 2rem;
     padding: 1.5rem;
     background: var(--bg-panel);
     border-radius: 15px;
     border: 1px solid var(--border-color);
     backdrop-filter: blur(10px);
+    flex-wrap: wrap;
+}
+
+.connection-mode {
+    display: flex;
+    gap: 1rem;
+    padding: 0.5rem;
+    background: var(--bg-secondary);
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+}
+
+.mode-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.mode-label:hover {
+    background: rgba(0, 212, 255, 0.1);
+}
+
+.mode-label input[type="radio"] {
+    display: none;
+}
+
+.mode-label input[type="radio"]:checked+.mode-text {
+    color: var(--accent-primary);
+    font-weight: 600;
+}
+
+.mode-label input[type="radio"]:checked~* {
+    color: var(--accent-primary);
+}
+
+.mode-text {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
 }
 
 .btn-primary {
