@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+  GATT Database Configuration for XIAO MG24 IMU BLE Transmitter
+  Nordic UART Service (NUS) compatible
+-->
+<gatt gatt_caching="true" generic_attribute_service="true" header="gatt_db.h" name="Custom BLE GATT" out="gatt_db.c" prefix="gattdb_">
+
+  <!-- Generic Access Service -->
+  <service advertise="false" name="Generic Access" requirement="mandatory" sourceId="org.bluetooth.service.generic_access" type="primary" uuid="1800">
+    <informativeText>Abstract: The generic_access service contains generic information about the device. All available Characteristics are readonly. </informativeText>
+    
+    <characteristic const="false" id="device_name" name="Device Name" sourceId="org.bluetooth.characteristic.gap.device_name" uuid="2A00">
+      <value length="14" type="utf-8" variable_length="false">XIAO_IMU_MG24</value>
+      <properties>
+        <read authenticated="false" bonded="false" encrypted="false"/>
+        <write authenticated="false" bonded="false" encrypted="false"/>
+      </properties>
+    </characteristic>
+    
+    <characteristic const="true" name="Appearance" sourceId="org.bluetooth.characteristic.gap.appearance" uuid="2A01">
+      <value length="2" type="hex" variable_length="false">0000</value>
+      <properties>
+        <read authenticated="false" bonded="false" encrypted="false"/>
+      </properties>
+    </characteristic>
+  </service>
+
+  <!-- Device Information Service -->
+  <service advertise="false" name="Device Information" requirement="mandatory" sourceId="org.bluetooth.service.device_information" type="primary" uuid="180A">
+    <informativeText>Abstract: The Device Information Service exposes manufacturer and/or vendor information about a device. Summary: This service exposes manufacturer information about a device. The Device Information Service is instantiated as a Primary Service. Only one instance of the Device Information Service is exposed on a device.</informativeText>
+    
+    <characteristic const="true" name="Manufacturer Name String" sourceId="org.bluetooth.characteristic.manufacturer_name_string" uuid="2A29">
+      <value length="11" type="utf-8" variable_length="false">Seeed Studio</value>
+      <properties>
+        <read authenticated="false" bonded="false" encrypted="false"/>
+      </properties>
+    </characteristic>
+    
+    <characteristic const="true" name="Model Number String" sourceId="org.bluetooth.characteristic.model_number_string" uuid="2A24">
+      <value length="14" type="utf-8" variable_length="false">XIAO MG24 Sense</value>
+      <properties>
+        <read authenticated="false" bonded="false" encrypted="false"/>
+      </properties>
+    </characteristic>
+  </service>
+
+  <!-- Nordic UART Service (NUS) -->
+  <service advertise="true" id="nus_service" name="Nordic UART Service" requirement="mandatory" sourceId="" type="primary" uuid="6e400001-b5a3-f393-e0a9-e50e24dcca9e">
+    <informativeText>Nordic UART Service for IMU data transmission</informativeText>
+    
+    <!-- RX Characteristic - for receiving data (not used in this implementation) -->
+    <characteristic const="false" id="nus_rx" name="NUS RX" sourceId="" uuid="6e400002-b5a3-f393-e0a9-e50e24dcca9e">
+      <value length="20" type="hex" variable_length="true">00</value>
+      <properties>
+        <write authenticated="false" bonded="false" encrypted="false"/>
+        <write_no_response authenticated="false" bonded="false" encrypted="false"/>
+      </properties>
+    </characteristic>
+    
+    <!-- TX Characteristic - for sending IMU data -->
+    <characteristic const="false" id="nus_tx" name="NUS TX" sourceId="" uuid="6e400003-b5a3-f393-e0a9-e50e24dcca9e">
+      <value length="20" type="hex" variable_length="true">00</value>
+      <properties>
+        <notify authenticated="false" bonded="false" encrypted="false"/>
+      </properties>
+    </characteristic>
+  </service>
+
+</gatt>
