@@ -1,0 +1,6 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "XIAO-MG24-Sense")(type "KiCad")(uri "${KIPRJMOD}/../XIAO-MG24-Sense/XIAO-MG24-Sense.kicad_sym")(options "")(descr ""))
+  (lib (name "CR2032-Holder")(type "KiCad")(uri "${KIPRJMOD}/../CR2032-holder/CR2032-Holder.kicad_sym")(options "")(descr ""))
+  (lib (name "SS12D00G3")(type "KiCad")(uri "${KIPRJMOD}/../SS12D00G3/SS12D00G3.kicad_sym")(options "")(descr ""))
+)

@@ -1,0 +1,264 @@
+(footprint "CR2032-Holder"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(descr "CR2032 Battery Holder, Akizuki 100706, CH25-2032LF")
+	(tags "battery holder CR2032 coin cell through-hole")
+	(property "Reference" "BT**"
+		(at 0 -12.5 0)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "61ddb9e8-d149-47ed-887f-2e62503e5ea8")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "CR2032_Holder"
+		(at 0 12.5 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "22d84f67-4d02-4c5c-b76d-d625946e5857")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "9576348b-06a5-42a8-beda-3628d725f132")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "e4165400-f5d2-4243-94af-183c992607ba")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr through_hole)
+	(fp_line
+		(start -12.6 -11.65)
+		(end 15.6 -11.65)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "1ebb0fc7-a795-4735-93bb-f95e5b11e8fb")
+	)
+	(fp_line
+		(start -12.6 11.65)
+		(end -12.6 -11.65)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "6356837f-cb46-4da1-81f6-519221f0e70c")
+	)
+	(fp_line
+		(start -12.6 11.65)
+		(end 15.6 11.65)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "653a1794-c1ff-419c-a471-070cab3b7550")
+	)
+	(fp_line
+		(start 15.6 -11.65)
+		(end 15.6 11.65)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "da3af8a6-fb7c-4132-b7bf-067c70e264ad")
+	)
+	(fp_line
+		(start -12.4 -11.4)
+		(end 15.4 -11.4)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "70a46f81-c004-4730-8a08-8c371fceeadc")
+	)
+	(fp_line
+		(start -12.4 11.4)
+		(end -12.4 -11.4)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "7eafdaff-277f-4080-abf2-7ea844d057a3")
+	)
+	(fp_line
+		(start -6.9 -3.3)
+		(end -12.4 -3.3)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.Fab")
+		(uuid "3a911340-46f9-4284-afe5-e775ef4a9d85")
+	)
+	(fp_line
+		(start -6.9 3.3)
+		(end -12.4 3.3)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.Fab")
+		(uuid "4b67ee9f-4946-49ea-9322-15c5889b0deb")
+	)
+	(fp_line
+		(start 15.4 -11.4)
+		(end 15.4 11.4)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "46bb9de3-c646-4647-8f72-bedd14bbabc0")
+	)
+	(fp_line
+		(start 15.4 11.4)
+		(end -12.4 11.4)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "5b12c5c7-2716-46f3-af2d-156c221f450e")
+	)
+	(fp_circle
+		(center -4.1 -4.4)
+		(end -3.35 -4.4)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+		(uuid "9165f319-b876-4295-8d5d-8a1326bcadbf")
+	)
+	(fp_circle
+		(center 4 0)
+		(end 15.4 0)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+		(uuid "21e78dd3-268c-4f2e-9374-a4e82fde707e")
+	)
+	(fp_circle
+		(center 4 9.6)
+		(end 4.75 9.6)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+		(uuid "4326277d-3992-4ad1-aeac-ef17198f5c66")
+	)
+	(fp_circle
+		(center 12.1 -4.4)
+		(end 12.85 -4.4)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+		(uuid "791e466a-c29b-47bd-89cb-d2cc4b2ceb5d")
+	)
+	(fp_text user "+"
+		(at -10 1.9 0)
+		(layer "F.SilkS")
+		(uuid "19874920-7840-4dea-ba5f-f71165e660c4")
+		(effects
+			(font
+				(size 2 2)
+				(thickness 0.3)
+			)
+		)
+	)
+	(fp_text user "-"
+		(at 10 2.1 0)
+		(layer "F.SilkS")
+		(uuid "933a7c1c-eed0-4762-94b4-b0845b0c6fb3")
+		(effects
+			(font
+				(size 2 2)
+				(thickness 0.3)
+			)
+		)
+	)
+	(fp_text user "${REFERENCE}"
+		(at 0.8 0 0)
+		(layer "F.Fab")
+		(uuid "f6569040-244c-4791-870c-103945a99791")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "1" thru_hole circle
+		(at -10 0)
+		(size 2 2)
+		(drill 1.2)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "54816be1-95ae-4cd5-b96c-ce63daf78d49")
+	)
+	(pad "2" thru_hole circle
+		(at 10.1 0)
+		(size 2 2)
+		(drill 1.2)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "cceb3791-4474-47ec-a0c2-0a1588636e0d")
+	)
+	(embedded_fonts no)
+	(model "${KICAD8_3DMODEL_DIR}/Battery.3dshapes/BatteryHolder_Keystone_3000_1x12mm.wrl"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
+)

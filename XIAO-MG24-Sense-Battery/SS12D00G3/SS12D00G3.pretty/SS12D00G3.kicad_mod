@@ -1,0 +1,236 @@
+(footprint "SS12D00G3"
+  (version 20240108)
+  (generator "pcbnew")
+  (generator_version "9.0")
+  (layer "F.Cu")
+  (descr "SS12D00G3 SPDT Slide Switch, 2.5mm pitch")
+  (tags "slide switch SPDT")
+  (property "Reference" "SW"
+    (at 2.5 -3.5 0)
+    (layer "F.SilkS")
+    (uuid "00000000-0000-0000-0000-000000000001")
+    (effects
+      (font
+        (size 1 1)
+        (thickness 0.15)
+      )
+    )
+  )
+  (property "Value" "SS12D00G3"
+    (at 2.5 4 0)
+    (layer "F.Fab")
+    (uuid "00000000-0000-0000-0000-000000000002")
+    (effects
+      (font
+        (size 1 1)
+        (thickness 0.15)
+      )
+    )
+  )
+  (property "Footprint" ""
+    (at 0 0 0)
+    (unlocked yes)
+    (layer "F.Fab")
+    (hide yes)
+    (uuid "00000000-0000-0000-0000-000000000003")
+    (effects
+      (font
+        (size 1.27 1.27)
+        (thickness 0.15)
+      )
+    )
+  )
+  (property "Datasheet" ""
+    (at 0 0 0)
+    (unlocked yes)
+    (layer "F.Fab")
+    (hide yes)
+    (uuid "00000000-0000-0000-0000-000000000004")
+    (effects
+      (font
+        (size 1.27 1.27)
+        (thickness 0.15)
+      )
+    )
+  )
+  (property "Description" "SPDT Slide Switch SS12D00G3"
+    (at 0 0 0)
+    (unlocked yes)
+    (layer "F.Fab")
+    (hide yes)
+    (uuid "00000000-0000-0000-0000-000000000005")
+    (effects
+      (font
+        (size 1.27 1.27)
+        (thickness 0.15)
+      )
+    )
+  )
+  (attr through_hole)
+  (fp_line
+    (start -2.3 -2.8)
+    (end -2.3 2.8)
+    (stroke
+      (width 0.12)
+      (type solid)
+    )
+    (layer "F.SilkS")
+    (uuid "00000000-0000-0000-0000-000000000006")
+  )
+  (fp_line
+    (start -2.3 -2.8)
+    (end 7.3 -2.8)
+    (stroke
+      (width 0.12)
+      (type solid)
+    )
+    (layer "F.SilkS")
+    (uuid "00000000-0000-0000-0000-000000000007")
+  )
+  (fp_line
+    (start -2.3 2.8)
+    (end 7.3 2.8)
+    (stroke
+      (width 0.12)
+      (type solid)
+    )
+    (layer "F.SilkS")
+    (uuid "00000000-0000-0000-0000-000000000008")
+  )
+  (fp_line
+    (start 7.3 -2.8)
+    (end 7.3 2.8)
+    (stroke
+      (width 0.12)
+      (type solid)
+    )
+    (layer "F.SilkS")
+    (uuid "00000000-0000-0000-0000-000000000009")
+  )
+  (fp_line
+    (start -2.5 -3)
+    (end -2.5 3)
+    (stroke
+      (width 0.05)
+      (type solid)
+    )
+    (layer "F.CrtYd")
+    (uuid "00000000-0000-0000-0000-000000000010")
+  )
+  (fp_line
+    (start -2.5 -3)
+    (end 7.5 -3)
+    (stroke
+      (width 0.05)
+      (type solid)
+    )
+    (layer "F.CrtYd")
+    (uuid "00000000-0000-0000-0000-000000000011")
+  )
+  (fp_line
+    (start -2.5 3)
+    (end 7.5 3)
+    (stroke
+      (width 0.05)
+      (type solid)
+    )
+    (layer "F.CrtYd")
+    (uuid "00000000-0000-0000-0000-000000000012")
+  )
+  (fp_line
+    (start 7.5 -3)
+    (end 7.5 3)
+    (stroke
+      (width 0.05)
+      (type solid)
+    )
+    (layer "F.CrtYd")
+    (uuid "00000000-0000-0000-0000-000000000013")
+  )
+  (fp_line
+    (start -2.2 -2.7)
+    (end -2.2 2.7)
+    (stroke
+      (width 0.1)
+      (type solid)
+    )
+    (layer "F.Fab")
+    (uuid "00000000-0000-0000-0000-000000000014")
+  )
+  (fp_line
+    (start -2.2 -2.7)
+    (end 7.2 -2.7)
+    (stroke
+      (width 0.1)
+      (type solid)
+    )
+    (layer "F.Fab")
+    (uuid "00000000-0000-0000-0000-000000000015")
+  )
+  (fp_line
+    (start -2.2 2.7)
+    (end 7.2 2.7)
+    (stroke
+      (width 0.1)
+      (type solid)
+    )
+    (layer "F.Fab")
+    (uuid "00000000-0000-0000-0000-000000000016")
+  )
+  (fp_line
+    (start 7.2 -2.7)
+    (end 7.2 2.7)
+    (stroke
+      (width 0.1)
+      (type solid)
+    )
+    (layer "F.Fab")
+    (uuid "00000000-0000-0000-0000-000000000017")
+  )
+  (fp_text user "${REFERENCE}"
+    (at 2.5 0 0)
+    (layer "F.Fab")
+    (uuid "00000000-0000-0000-0000-000000000018")
+    (effects
+      (font
+        (size 1 1)
+        (thickness 0.15)
+      )
+    )
+  )
+  (pad "1" thru_hole circle
+    (at 0 0)
+    (size 1.5 1.5)
+    (drill 0.9)
+    (layers "*.Cu" "*.Mask")
+    (remove_unused_layers no)
+    (uuid "00000000-0000-0000-0000-000000000019")
+  )
+  (pad "2" thru_hole circle
+    (at 2.5 0)
+    (size 1.5 1.5)
+    (drill 0.9)
+    (layers "*.Cu" "*.Mask")
+    (remove_unused_layers no)
+    (uuid "00000000-0000-0000-0000-000000000020")
+  )
+  (pad "3" thru_hole circle
+    (at 5 0)
+    (size 1.5 1.5)
+    (drill 0.9)
+    (layers "*.Cu" "*.Mask")
+    (remove_unused_layers no)
+    (uuid "00000000-0000-0000-0000-000000000021")
+  )
+  (model "${KICAD9_3DMODEL_DIR}/Button_Switch_THT.3dshapes/SW_Slide_SPDT.wrl"
+    (offset
+      (xyz 0 0 0)
+    )
+    (scale
+      (xyz 1 1 1)
+    )
+    (rotate
+      (xyz 0 0 0)
+    )
+  )
+)
