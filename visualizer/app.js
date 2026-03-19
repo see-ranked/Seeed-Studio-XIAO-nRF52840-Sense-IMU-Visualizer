@@ -179,11 +179,13 @@ async function connectBluetooth() {
 
         updateStatus('disconnected', '接続中...');
 
-        // BLEデバイスを検索（Bluefruit UART Service UUID）
+        // BLEデバイスを検索
+        // filters: namePrefix のみ使用（services フィルターはデバイス側のADVパケットに
+        //   サービスUUIDが含まれている必要があるため使用しない）
+        // optionalServices: 接続後にアクセスするサービスUUIDをここで宣言する
         bleDevice = await navigator.bluetooth.requestDevice({
             filters: [
-                { namePrefix: 'XIAO' },
-                { services: ['6e400001-b5a3-f393-e0a9-e50e24dcca9e'] }
+                { namePrefix: 'XIAO' }
             ],
             optionalServices: ['6e400001-b5a3-f393-e0a9-e50e24dcca9e']
         });
@@ -194,9 +196,22 @@ async function connectBluetooth() {
         const server = await bleDevice.gatt.connect();
         console.log('GATT接続成功');
 
-        // UART サービスを取得（Bluefruit UART Service）
+        // ★診断: 全プライマリサービスを列挙
+        try {
+            const allServices = await server.getPrimaryServices();
+            console.log('=== Device GATT Services ===');
+            for (const svc of allServices) {
+                console.log('  Service:', svc.uuid);
+            }
+            console.log('============================');
+        } catch(e) {
+            console.warn('getPrimaryServices() failed:', e.message);
+        }
+
+        // UART サービスを取得（Nordic UART Service）
         const service = await server.getPrimaryService('6e400001-b5a3-f393-e0a9-e50e24dcca9e');
         console.log('UARTサービス取得');
+
 
         // TXキャラクタリスティックを取得（デバイスからの送信）
         bleCharacteristic = await service.getCharacteristic('6e400003-b5a3-f393-e0a9-e50e24dcca9e');
