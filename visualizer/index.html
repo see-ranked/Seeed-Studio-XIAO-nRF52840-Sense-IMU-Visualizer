@@ -37,6 +37,10 @@
                 <span class="btn-icon">🔄</span>
                 姿勢リセット
             </button>
+            <button id="addBleBtn" class="btn-secondary" disabled>
+                <span class="btn-icon">➕</span>
+                BLE追加接続
+            </button>
             <div id="status" class="status disconnected">
                 <span class="status-dot"></span>
                 <span class="status-text">未接続</span>
@@ -52,6 +56,14 @@
                         <input type="checkbox" id="driftCompensation" checked>
                         <span class="toggle-slider"></span>
                         <span class="toggle-text">移動平均フィルタ</span>
+                    </label>
+                </div>
+
+                <div class="setting-item">
+                    <label class="toggle-label">
+                        <input type="checkbox" id="trajectoryEnabled" checked>
+                        <span class="toggle-slider"></span>
+                        <span class="toggle-text">軌跡トレース</span>
                     </label>
                 </div>
 
@@ -97,8 +109,13 @@
             <div class="panel data-panel">
                 <h2>センサーデータ</h2>
 
+                <div class="device-selector">
+                    <span class="device-selector-label">表示デバイス:</span>
+                    <select id="deviceSelect" class="device-select"></select>
+                </div>
+
                 <div class="sensor-group">
-                    <h3>📊 加速度計 (G)</h3>
+                    <h3>📍 位置変化 (m)</h3>
                     <div class="sensor-values">
                         <div class="sensor-value">
                             <span class="axis x-axis">X</span>
@@ -116,7 +133,7 @@
                 </div>
 
                 <div class="sensor-group">
-                    <h3>🔄 ジャイロスコープ (°/s)</h3>
+                    <h3>⚡ 推定速度 (m/s)</h3>
                     <div class="sensor-values">
                         <div class="sensor-value">
                             <span class="axis x-axis">X</span>
@@ -159,11 +176,11 @@
         <!-- Charts -->
         <div class="charts-container">
             <div class="panel chart-panel">
-                <h2>加速度グラフ</h2>
+                <h2>位置変化グラフ</h2>
                 <canvas id="accelChart"></canvas>
             </div>
             <div class="panel chart-panel">
-                <h2>ジャイロスコープグラフ</h2>
+                <h2>向き変化グラフ</h2>
                 <canvas id="gyroChart"></canvas>
             </div>
         </div>
