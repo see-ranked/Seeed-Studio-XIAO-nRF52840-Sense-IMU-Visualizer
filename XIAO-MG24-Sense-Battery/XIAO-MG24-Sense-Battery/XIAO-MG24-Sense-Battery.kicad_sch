@@ -329,156 +329,6 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "Device:D_Schottky"
-			(pin_numbers
-				(hide yes)
-			)
-			(pin_names
-				(offset 1.016)
-				(hide yes)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "D"
-				(at 0 2.54 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "D_Schottky"
-				(at 0 -2.54 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" "~"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Description" "Schottky diode"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_keywords" "diode Schottky"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_fp_filters" "TO-???* *_Diode_* *SingleDiode* D_*"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "D_Schottky_0_1"
-				(polyline
-					(pts
-						(xy -1.905 0.635) (xy -1.905 1.27) (xy -1.27 1.27) (xy -1.27 -1.27) (xy -0.635 -1.27) (xy -0.635 -0.635)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 1.27 1.27) (xy 1.27 -1.27) (xy -1.27 0) (xy 1.27 1.27)
-					)
-					(stroke
-						(width 0.254)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 1.27 0) (xy -1.27 0)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-			)
-			(symbol "D_Schottky_1_1"
-				(pin passive line
-					(at -3.81 0 0)
-					(length 2.54)
-					(name "K"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 3.81 0 180)
-					(length 2.54)
-					(name "A"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
 		(symbol "SS12D00G3:SS12D00G3"
 			(pin_names
 				(offset 0)
@@ -1181,18 +1031,6 @@
 		(uuid "222602f1-4849-4127-b95d-15fa1c9a80bb")
 	)
 	(junction
-		(at 163.83 59.69)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "5485da9c-dde0-4d66-b3c1-741c8722a25a")
-	)
-	(junction
-		(at 140.97 41.91)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "72073814-9ab1-4757-93e3-0083e6117220")
-	)
-	(junction
 		(at 140.97 59.69)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1284,16 +1122,6 @@
 	)
 	(wire
 		(pts
-			(xy 140.97 41.91) (xy 163.83 41.91)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "1d8a502f-1825-445d-88cf-1a56ff5190c8")
-	)
-	(wire
-		(pts
 			(xy 83.82 26.67) (xy 88.9 26.67)
 		)
 		(stroke
@@ -1344,16 +1172,6 @@
 	)
 	(wire
 		(pts
-			(xy 163.83 59.69) (xy 140.97 59.69)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "34ed777c-8e2f-46e5-9cef-b7a3f343aaff")
-	)
-	(wire
-		(pts
 			(xy 45.72 34.29) (xy 48.26 34.29)
 		)
 		(stroke
@@ -1371,6 +1189,16 @@
 			(type default)
 		)
 		(uuid "477b27b6-dc99-409a-acb0-e897f1911264")
+	)
+	(wire
+		(pts
+			(xy 140.97 41.91) (xy 140.97 44.45)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5c59dec4-2a3e-497c-8669-51ba3bce8d58")
 	)
 	(wire
 		(pts
@@ -1411,6 +1239,16 @@
 			(type default)
 		)
 		(uuid "777d9a6f-592a-4bbc-ab56-e48b2ff8359e")
+	)
+	(wire
+		(pts
+			(xy 140.97 46.99) (xy 140.97 49.53)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "78dadacd-24d1-4a80-b852-37b74d4fe39d")
 	)
 	(wire
 		(pts
@@ -1544,7 +1382,7 @@
 	)
 	(wire
 		(pts
-			(xy 182.88 59.69) (xy 163.83 59.69)
+			(xy 140.97 59.69) (xy 182.88 59.69)
 		)
 		(stroke
 			(width 0)
@@ -1642,6 +1480,75 @@
 	)
 	(symbol
 		(lib_id "Connector:Conn_01x02_Pin")
+		(at 146.05 46.99 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "15778a47-32ed-402e-a946-d9def23dac4d")
+		(property "Reference" "J3"
+			(at 147.066 47.752 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Conn_01x02_Pin"
+			(at 149.352 34.29 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical"
+			(at 146.05 46.99 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 146.05 46.99 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Generic connector, single row, 01x02, script generated"
+			(at 146.05 46.99 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "76c3fba6-a3d1-49cb-84cd-fdc7744e23be")
+		)
+		(pin "2"
+			(uuid "84a2260e-1af7-43c3-bfe3-c120be9a3ecf")
+		)
+		(instances
+			(project "XIAO-MG24-Sense-Battery"
+				(path "/9ab561bf-7754-489b-b6e1-4fe35361b16e"
+					(reference "J3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:Conn_01x02_Pin")
 		(at 144.78 34.29 90)
 		(unit 1)
 		(exclude_from_sim no)
@@ -1704,146 +1611,6 @@
 			(project "XIAO-MG24-Sense-Battery"
 				(path "/9ab561bf-7754-489b-b6e1-4fe35361b16e"
 					(reference "J2")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "CR2032-Holder:CR2032_Holder")
-		(at 163.83 54.61 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "3aba2806-51fb-44b8-9508-c5c8a1653cc4")
-		(property "Reference" "BT2"
-			(at 167.64 53.3399 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Value" "CR2032_Holder"
-			(at 167.64 55.8799 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" "CR2032-holder:CR2032-Holder"
-			(at 163.83 54.61 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "https://akizukidenshi.com/goodsaffix/CH25-2032LF.pdf"
-			(at 173.482 37.846 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "CR2032 Battery Holder, Akizuki 100706"
-			(at 170.688 46.228 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "872d20f2-c43c-4627-b8fd-0fdf671b37ea")
-		)
-		(pin "1"
-			(uuid "659b9bb1-b15b-446d-926f-622b98082c00")
-		)
-		(instances
-			(project "XIAO-MG24-Sense-Battery"
-				(path "/9ab561bf-7754-489b-b6e1-4fe35361b16e"
-					(reference "BT2")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:D_Schottky")
-		(at 140.97 45.72 270)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "3cbd3cd6-2de5-400b-b55e-9236afdd17b3")
-		(property "Reference" "D1"
-			(at 143.51 44.1324 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "D_Schottky"
-			(at 143.51 46.6724 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Diode_THT:D_DO-41_SOD81_P7.62mm_Horizontal"
-			(at 140.97 45.72 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 140.97 45.72 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Schottky diode"
-			(at 140.97 45.72 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "067a35de-d29f-48b2-ad26-f3260b9dfaf0")
-		)
-		(pin "1"
-			(uuid "3eeebc6f-aa58-4f44-9e31-3d787383e911")
-		)
-		(instances
-			(project ""
-				(path "/9ab561bf-7754-489b-b6e1-4fe35361b16e"
-					(reference "D1")
 					(unit 1)
 				)
 			)
@@ -2232,76 +1999,6 @@
 			(project "XIAO-MG24-Sense-Battery"
 				(path "/9ab561bf-7754-489b-b6e1-4fe35361b16e"
 					(reference "#FLG02")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:D_Schottky")
-		(at 163.83 45.72 270)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "d16ff07a-ac98-44b5-a8c3-753e425e6c7e")
-		(property "Reference" "D2"
-			(at 166.37 44.1324 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "D_Schottky"
-			(at 166.37 46.6724 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Diode_THT:D_DO-41_SOD81_P7.62mm_Horizontal"
-			(at 163.83 45.72 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 163.83 45.72 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Schottky diode"
-			(at 163.83 45.72 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "49700b18-86af-46a0-b76d-d9db3a41ad28")
-		)
-		(pin "1"
-			(uuid "1d17c302-d785-4a33-a965-770fc1f90649")
-		)
-		(instances
-			(project "XIAO-MG24-Sense-Battery"
-				(path "/9ab561bf-7754-489b-b6e1-4fe35361b16e"
-					(reference "D2")
 					(unit 1)
 				)
 			)
